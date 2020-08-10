@@ -17,3 +17,4 @@ admin.site.register(User)
 admin.site.register(Listing, ListingAdmin)
 admin.site.register(Auction)
 admin.site.register(Watchlist)
+
