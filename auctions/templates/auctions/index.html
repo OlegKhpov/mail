@@ -4,14 +4,17 @@
     <h2>Active Listings</h2>
     
         {% for item in listings %}
-                <div>
-                    <img src="{{ item.image.path }}" alt="{{ item.name }}_image, {{item.image.url}}">
-                    {{ item.name }}: {{ item.price }}$
+                <div class="card" style="padding-bottom: 20px;">
+                    {% if item.image %}
+                        <div class="card-header">
+                            {{ item.name }}
+                        </div>
+                        <img src="{ IMAGE_URL }:{{ item.image.url }}">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">{{ item.description }}</li>
+                        </ul>                     
+                    {% endif %}
                 </div>
         
         {% endfor %}
-    
-
-    
-
 {% endblock %}

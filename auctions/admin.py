@@ -10,8 +10,7 @@ class ListingAdmin(admin.ModelAdmin):
         "description", 
         "image", 
         "owner", 
-        "category", 
-        "owner",
+        "category",
     )
 
 admin.site.register(User)
