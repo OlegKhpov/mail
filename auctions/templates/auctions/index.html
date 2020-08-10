@@ -1,0 +1,17 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+    <h2>Active Listings</h2>
+    
+        {% for item in listings %}
+                <div>
+                    <img src="{{ item.image.path }}" alt="{{ item.name }}_image, {{item.image.url}}">
+                    {{ item.name }}: {{ item.price }}$
+                </div>
+        
+        {% endfor %}
+    
+
+    
+
+{% endblock %}
