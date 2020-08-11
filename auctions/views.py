@@ -72,3 +72,6 @@ def listing(request, listing):
 
 def add_to_wl(request, listing):
     pass
+
+def create(request):
+    return render(request, "auctions/create.html")

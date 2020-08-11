@@ -5,6 +5,7 @@ from .models import User, Listing, Auction, Watchlist
 # Register your models here.
 class ListingAdmin(admin.ModelAdmin):
     list_display = (
+        "owner_id",
         "name", 
         "price", 
         "description", 
