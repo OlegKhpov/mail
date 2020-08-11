@@ -64,3 +64,11 @@ def register(request):
         return HttpResponseRedirect(reverse("index"))
     else:
         return render(request, "auctions/register.html")
+
+def listing(request, listing):
+    return render(request, "auctions/listing.html", {
+        "name": listing
+    })
+
+def add_to_wl(request, listing):
+    pass

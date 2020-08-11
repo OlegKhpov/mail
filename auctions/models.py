@@ -14,7 +14,7 @@ class Listing(models.Model):
         ("ARTI", "Artifacts"),
     )
     name = models.CharField(max_length=64)
-    price = models.DecimalField(max_digits=10, decimal_places=2)
+    price = models.DecimalField(max_digits=20, decimal_places=2)
     image = models.ImageField(upload_to="images", null=True, blank=True)
     created = models.DateTimeField(auto_now_add=True, blank=True)
     description = models.TextField(max_length=640)
@@ -27,6 +27,7 @@ class Listing(models.Model):
 class Auction(models.Model):
     list_id = models.ForeignKey(Listing, on_delete=models.CASCADE)
     number_bids = models.IntegerField()
+    current_bid = models.DecimalField(max_digits=20, decimal_places=2, null=True, blank=True)
     started = models.DateTimeField()
     ended = models.DateTimeField()
 
