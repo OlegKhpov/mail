@@ -14,7 +14,7 @@ class Listing(models.Model):
         ("BOOK", "Books"),
         ("ARTI", "Artifacts"),
     )
-    owner_id = models.ForeignKey(User, on_delete=models.CASCADE, default=0)
+    owner = models.ForeignKey(User, on_delete=models.CASCADE, default='')
     name = models.CharField(max_length=64)
     price = models.DecimalField(max_digits=20, decimal_places=2)
     image = models.ImageField(upload_to="images", null=True, blank=True)
@@ -35,4 +35,4 @@ class Auction(models.Model):
 class Watchlist(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     auction = models.ForeignKey(Auction, on_delete=models.CASCADE)
-    number_watchlist = models.IntegerField()
+    number_watchlist = models.IntegerField(default=0)

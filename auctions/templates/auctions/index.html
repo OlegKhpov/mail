@@ -8,7 +8,11 @@
                     <div class="card-header">
                         <b>{{ item.name }}</b>
                     </div>
-                    <img src="{ IMAGE_URL }:{{ item.image.url }}">
+                    {% if item.image %}
+                        <img src="{ IMAGE_URL }:{{ item.image.url }}">
+                    {% else %}
+                        <img src="images/no_image.png">
+                    {% endif %}
                     <ul class="list-group list-group-flush">
                         <li class="list-group-item">{{ item.name }} - {{ item.price }}$</li>
                         <li class="list-group-item">{{ item.description }}</li>
