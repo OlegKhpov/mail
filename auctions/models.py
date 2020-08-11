@@ -1,5 +1,6 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
+from django.utils import timezone
 
 
 class User(AbstractUser):
@@ -16,9 +17,8 @@ class Listing(models.Model):
     name = models.CharField(max_length=64)
     price = models.DecimalField(max_digits=20, decimal_places=2)
     image = models.ImageField(upload_to="images", null=True, blank=True)
-    created = models.DateTimeField(auto_now_add=True, blank=True)
+    created = models.DateTimeField(default=timezone.now, blank=True)
     description = models.TextField(max_length=640)
-    owner = models.CharField(max_length=64)
     category = models.CharField(
         max_length=4,
         choices=CATEGORIES,
@@ -34,4 +34,5 @@ class Auction(models.Model):
 class Watchlist(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     auction = models.ForeignKey(Auction, on_delete=models.CASCADE)
+    number_watchlist = models.IntegerField()
 

@@ -8,8 +8,7 @@ class ListingAdmin(admin.ModelAdmin):
         "name", 
         "price", 
         "description", 
-        "image", 
-        "owner", 
+        "image",
         "category",
     )
 
