@@ -5,14 +5,16 @@ from .models import User, Listing, Auction, Watchlist
 # Register your models here.
 class ListingAdmin(admin.ModelAdmin):
     list_display = (
-        "owner_id",
         "name", 
         "price", 
         "description", 
         "image",
         "category",
+        "owner",
     )
-
+    list_editable = list_display
+    list_display_links = None
+    
 admin.site.register(User)
 admin.site.register(Listing, ListingAdmin)
 admin.site.register(Auction)

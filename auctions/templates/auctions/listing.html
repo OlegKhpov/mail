@@ -1,7 +1,20 @@
 {% extends "auctions/layout.html" %}
 
 {% block body %}
-    <h2>{{ name }}</h2>
-    <img src="{ IMAGE_URL }:{{ item.image.url }}">
+    <div>
+        <h1>{{ listing.name }}</h1>
+        <div style="color: grey; font-size: small;">
+            Created by: {{ listing.owner.username }} at {{ listing.created }}
+        </div>
+        <div>
+            {% if listing.image %}
+                <img src="{ IMAGE_URL }:{{ listing.image.url }}">
+            {% else %}
+                <img src="images/no_image.png">
+            {% endif %}
+        </div>
+        <div>{{ listing.description }}</div>
+
+    </div>
     
 {% endblock %}

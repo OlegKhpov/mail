@@ -25,6 +25,9 @@ class Listing(models.Model):
         choices=CATEGORIES,
     )
 
+    def __str__(self):
+        return self.name
+
 class Auction(models.Model):
     list_id = models.ForeignKey(Listing, on_delete=models.CASCADE)
     number_bids = models.IntegerField()
@@ -34,5 +37,5 @@ class Auction(models.Model):
 
 class Watchlist(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    auction = models.ForeignKey(Auction, on_delete=models.CASCADE)
-    number_watchlist = models.IntegerField(default=0)
+    listing = models.ForeignKey(Listing, on_delete=models.CASCADE, default='')
+    number_watchlist = None
