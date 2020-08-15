@@ -7,27 +7,10 @@ from django import forms
 
 from .models import User, Listing, Auction, Watchlist
 
-class new_listing_form(forms.Form):
-    name = forms.CharField(label="Name", widget=forms.TextInput(attrs={
-        'placeholder': 'Name',
-        'rows': '1',
-    }))
-    image = forms.ImageField(label="Image")
-    description = forms.CharField(label="Description", widget=forms.Textarea(attrs={
-        'placeholder': 'Description',
-        'rows': '30',
-    }))
-    price = forms.DecimalField(label='Price', widget=forms.TextInput(attrs={
-        'placeholder': 'Price'
-        'rows': '1'
-    }))
-
 def index(request):
     return render(request, "auctions/index.html",{
         "listings": Listing.objects.all()
     })
-
-
 
 def login_view(request):
     if request.method == "POST":
@@ -90,11 +73,12 @@ def add_to_wl(request, listing):
 
 def create(request):
     if request.method == "POST":
-        form = new_listing_form(request.POST)
-        if form.is_valid():
-            name = form.cleaned_data['Name']
-            description = form.cleaned_data['Description']
-            price = form.cleaned_data['Price']
-            image = form.cleaned_data['Image']
+        name = request.POST.get("name")
+        description = request.POST.get("desc")
+        price = request.POST.get("stprice")
+        if request.POST.get("image"):
+            image = request.POST.get("image")
+        else:
+            image = 
     return render(request, "auctions/create.html")
 
