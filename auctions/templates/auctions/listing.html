@@ -4,6 +4,11 @@
     <div>
         <h1>{{ listing.name }}</h1>
         <div style="color: grey; font-size: small;">
+            {% if listing.status %}
+                <span class="badge badge-success">Openned</span>
+            {% else %}
+                <span class="badge badge-danger">Closed</span>
+            {% endif %}
             Created by: {{ listing.owner.username }} at {{ listing.created }}
         </div>
         <div>
@@ -16,5 +21,10 @@
         <div>{{ listing.description }}</div>
 
     </div>
+    {% if listing.owner == request.user %}
+        <div>
+            <a href="{% url 'close_bids' listing %}" class="btn btn-primary">Close Auction</a>
+        </div>
+    {% endif %}
     
 {% endblock %}

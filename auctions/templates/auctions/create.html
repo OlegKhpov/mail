@@ -2,7 +2,7 @@
 
 {% block body %}
     <h1>Create new listing</h1>
-    <form method="POST" action="{% url 'create'%}">
+    <form method="POST" action="{% url 'create_new'%}">
         {% csrf_token %}
         <div>
             <label for="formControlRange">Listing name: </label>
@@ -12,9 +12,17 @@
             <label for="formControlRange"style="padding-top: 5px;">Listing description: </label>
             <textarea class="form-control" type="text" placeholder="type description here" style="height: 200px;"required="required" name="desc"></textarea>
         </div>
+        <div>
+            <label>Choose category:</label>
+            <select name="category_set" style="width: 100px;">
+            {% for category in CATEGORY %}
+                <option value="{{ category.0 }}">{{ category.1 }}</option>
+            {% endfor %}
+            </select>
+        </div>
         <label>Image for your listing: </label>
         <div class="custom-file">            
-            <input type="file" class="custom-file-input" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01" name="img">
+            <input type="file" class="custom-file-input" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01" name="image">
             <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
         </div>
         <div style="padding-top: 10px; padding-bottom: 10px">

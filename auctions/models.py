@@ -20,6 +20,7 @@ class Listing(models.Model):
     image = models.ImageField(upload_to="images", null=True, blank=True)
     created = models.DateTimeField(default=timezone.now, blank=True)
     description = models.TextField(max_length=640)
+    status = models.BooleanField(default=True)
     category = models.CharField(
         max_length=4,
         choices=CATEGORIES,
@@ -37,5 +38,4 @@ class Auction(models.Model):
 
 class Watchlist(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    listing = models.ForeignKey(Listing, on_delete=models.CASCADE, default='')
-    number_watchlist = None
+    watchlist = []

@@ -11,6 +11,7 @@ class ListingAdmin(admin.ModelAdmin):
         "image",
         "category",
         "owner",
+        "status",
     )
     list_editable = list_display
     list_display_links = None
