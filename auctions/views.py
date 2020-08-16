@@ -9,7 +9,8 @@ from .models import User, Listing, Auction, Watchlist
 
 def index(request):
     return render(request, "auctions/index.html",{
-        "listings": Listing.objects.all()
+        "listings": Listing.objects.all(),
+        "watchlist": len(Watchlist.objects.filter(user=request.user)),
     })
 
 def login_view(request):
@@ -69,8 +70,16 @@ def listing(request, listing):
     })
 
 def add_to_wl(request, listing):
-    pass
-
+    if request.method == "POST":
+        current_user = request.user
+        item = Listing.objects.get(name=listing)
+        wl = Watchlist(user=current_user)
+        if listing not in wl.watchlist:
+            wl.watchlist[listing]: item
+            wl.save()
+            return HttpResponseRedirect(reverse("index"))
+        return HttpResponseRedirect(reverse("index"))
+        
 def create(request):
     return render(request, "auctions/create.html", {
         "CATEGORY": Listing.CATEGORIES
