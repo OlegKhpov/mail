@@ -25,9 +25,9 @@
                     <a class="nav-link" href="{% url 'logout' %}">Log Out</a>
                 </li>
                 <li>
-                    <a class="nav-link" href="">My Watchlist 
-                    {% if watchlist > 0 %}
-                        <span class="badge badge-primary">{{ watchlist }}</span>
+                    <a class="nav-link" href="{% url 'my_watchlist' %}">My Watchlist 
+                    {% if watchlist_len > 0 %}
+                        <span class="badge badge-primary">{{ watchlist_len }}</span>
                     {% endif %}</a>
                 </li>
                 <li class="nav-item">
@@ -43,6 +43,9 @@
             {% endif %}
         </ul>
         <hr>
+        {% if message %}
+            <div>{{ message }}</div>
+        {% endif %}
         {% block body %}
         {% endblock %}
     </body>

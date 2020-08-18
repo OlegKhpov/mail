@@ -2,7 +2,23 @@
 
 {% block body %}
     <h2>My Watchlist</h2>
-    {% for wl in watchlist %}
-    
-    {% endor %}
+    {% for item in watchlist %}
+        <div class="card" style="padding: 15px;">
+            <div class="card-header">
+                <b>{{ item.name }}</b>
+            </div>
+            {% if item.image %}
+                <img src="{ IMAGE_URL }:{{ item.image.url }}">
+            {% else %}
+                <img src="images/no_image.png">
+            {% endif %}
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">{{ item.name }} - {{ item.price }}$</li>
+                <li class="list-group-item">{{ item.description }}</li>
+                <li class="list-group-item">
+                    <a href="" class="btn btn-primary">Remove from Watchlist</a>
+                </li>
+            </ul>
+        </div>
+    {% endfor %}
 {% endblock %}

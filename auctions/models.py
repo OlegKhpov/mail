@@ -38,4 +38,4 @@ class Auction(models.Model):
 
 class Watchlist(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    watchlist = []
+    item = models.ForeignKey(Listing, on_delete=models.CASCADE, null=True)
