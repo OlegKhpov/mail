@@ -70,8 +70,11 @@ def listing(request, listing):
     })
 
 def my_watchlist(request):
+    current_user = request.user
+    listing = current_user.watchlist_set.item.all()
+    wl = listing.item.all()
     return render(request, "auctions/watchlist.html",{
-        'watchlist': Watchlist.objects.filter(user=request.user)
+        'watchlist': wl
     })
 
 def add_to_wl(request, listing):
