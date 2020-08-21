@@ -43,8 +43,12 @@
             {% endif %}
         </ul>
         <hr>
-        {% if message %}
-            <div>{{ message }}</div>
+        {% if message_positive %}
+            <div class="alert alert-primary" role="alert">{{ message_positive }}</div>
+        {% elif message_warning %}
+            <div class="alert alert-danger" role="alert">{{ message_warning }}</div>
+        {% elif message_error %}
+            <div class="alert alert-warning" role="alert">{{ message_error }}</div>
         {% endif %}
         {% block body %}
         {% endblock %}

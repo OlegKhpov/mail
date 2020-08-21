@@ -5,12 +5,13 @@ from django.shortcuts import render
 from django.urls import reverse
 from django import forms
 
+from .utils import *
 from .models import User, Listing, Auction, Watchlist
 
 def index(request):
     return render(request, "auctions/index.html",{
         "listings": Listing.objects.all(),
-        "watchlist_len": 3,
+        "watchlist_len": len(get_watchlist(request.user)),
     })
 
 def login_view(request):
@@ -70,21 +71,19 @@ def listing(request, listing):
     })
 
 def my_watchlist(request):
-    current_user = request.user
-    listing = current_user.watchlist_set.item.all()
-    wl = listing.item.all()
+    watchlist = get_watchlist(request.user)
     return render(request, "auctions/watchlist.html",{
-        'watchlist': wl
+        'watchlist': watchlist,
+        "watchlist_len": len(get_watchlist(request.user)),
     })
 
 def add_to_wl(request, listing):
     user = request.user
-    listing = Listing.objects.get(name=listing)
-    wl = Watchlist(user=user, item=listing)
-    if not wl in Watchlist.objects.filter(user=user):        
+    listing = Listing.objects.get(name=listing)    
+    if not listing in get_watchlist(user):
+        wl = Watchlist(user=user, item=listing)   
         wl.save()
-    return HttpResponseRedirect(reverse("index"))
-    
+    return HttpResponseRedirect(reverse("index"))   
 
         
 def create(request):
