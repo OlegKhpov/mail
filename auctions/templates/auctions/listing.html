@@ -23,8 +23,39 @@
     </div>
     {% if listing.owner == request.user %}
         <div>
-            <a href="{% url 'close_bids' listing %}" class="btn btn-primary">Close Auction</a>
+            <a href="{% url 'close_bids' listing %}" class="btn btn-primary">Close Auction</a>  
         </div>
     {% endif %}
     
+    <h4>Bids</h4>
+    <div>
+        <b>Current price - {{ listing.price }}$</b>
+    </div>
+    <form action="{% url 'place_bid' listing %}" method="POST">
+        {% csrf_token %}
+        <div class="form-group">
+            <div class="input-group mb-3" style="width: 500px;">
+                <div class="input-group-prepend">
+                  <span class="input-group-text">$</span>
+                </div>
+                <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)" name='bid'>
+                <div class="input-group-append">
+                  <span class="input-group-text">.00</span>
+                </div>                
+                <input type="submit" class="btn btn-secondary" value="Place Bid" style="width: 100px; ">
+            </div>
+            
+          </div>
+    </form>
+    <h4>Comment_field</h4>
+
+    {% if in_watchlist %}
+        <div>
+            <a href="" class="btn btn-primary">Remove from Watchlist</a>
+        </div>
+    {% else %}
+        <div>
+            <a href="{% url 'add_to_wl' listing.name %}" class="btn btn-primary">Add to Watchlist</a>
+        </div>
+    {% endif %}
 {% endblock %}

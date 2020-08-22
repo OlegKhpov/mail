@@ -16,7 +16,7 @@ class Listing(models.Model):
     )
     owner = models.ForeignKey(User, on_delete=models.CASCADE, default='')
     name = models.CharField(max_length=64)
-    price = models.DecimalField(max_digits=20, decimal_places=2)
+    price = models.IntegerField()
     image = models.ImageField(upload_to="images", null=True, blank=True)
     created = models.DateTimeField(default=timezone.now, blank=True)
     description = models.TextField(max_length=640)
@@ -30,11 +30,11 @@ class Listing(models.Model):
         return self.name
 
 class Auction(models.Model):
-    list_id = models.ForeignKey(Listing, on_delete=models.CASCADE)
-    number_bids = models.IntegerField()
-    current_bid = models.DecimalField(max_digits=20, decimal_places=2, null=True, blank=True)
-    started = models.DateTimeField()
-    ended = models.DateTimeField()
+    listing = models.ForeignKey(Listing, on_delete=models.CASCADE)
+    number_bids = models.IntegerField(default=0)
+    current_bid = models.IntegerField(null=True, blank=True)
+    date_placed = models.DateTimeField(default=timezone.now, blank=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
 
 class Watchlist(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -42,3 +42,12 @@ class Watchlist(models.Model):
 
     def item_of_wl(self):
         return self.item
+
+class Comment(models.Model):
+    listing = models.ForeignKey(Listing, on_delete=models.CASCADE)
+    comment = models.TextField(max_length=640)
+    date = models.DateTimeField(default=timezone.now, blank=True)
+    author = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
+
+    def __str__(self):
+        return self.listing

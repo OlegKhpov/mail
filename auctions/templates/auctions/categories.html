@@ -1,0 +1,7 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+    {% for category in CATEGORY %}
+        <option value="{{ category.0 }}">{{ category.1 }}</option>
+    {% endfor %}
+{% endblock %}

@@ -66,9 +66,14 @@ def register(request):
         return render(request, "auctions/register.html")
 
 def listing(request, listing):
-    return render(request, "auctions/listing.html", {
-        "listing": Listing.objects.get(name=listing)
-    })
+    context = {
+        "listing": Listing.objects.get(name=listing),
+        "watchlist_len": len(get_watchlist(request.user)),
+        "in_watchlist": False,
+    }
+    if Listing.objects.get(name=listing) in get_watchlist(request.user):
+        context['in_watchlist'] = True
+    return render(request, "auctions/listing.html", context)
 
 def my_watchlist(request):
     watchlist = get_watchlist(request.user)
@@ -101,6 +106,37 @@ def create_new(request):
         new_listing = Listing(name=name, description=description, price=price, owner=current_user, category=category)
         new_listing.save()
         return HttpResponseRedirect(reverse("index"))
+
+def comment(request, listing):
+    pass
+
+def place_bid(request, listing):
+    current_user = request.user
+    bid = request.POST.get('bid')
+    listing = Listing.objects.get(name=listing)
+    if check_bid(bid, listing):
+        listing.price = int(bid)
+        listing.save()
+        context = {
+                "listing": listing,
+                "watchlist_len": len(get_watchlist(request.user)),
+                "in_watchlist": False,
+                "message_positive": f"You placed a bid - {bid}.00 $"
+            }
+        if listing in get_watchlist(request.user):
+            context['in_watchlist'] = True
+        return render(request, "auctions/listing.html", context)
+        
+    context = {
+            "listing": listing,
+            "watchlist_len": len(get_watchlist(request.user)),
+            "in_watchlist": False,
+            "message_warning": f"Your bid is too small. Please reise a bid higher than previous."
+        }
+    if listing in get_watchlist(request.user):
+        context['in_watchlist'] = True
+    return render(request, "auctions/listing.html", context)
+
 
 def close_bids(request, listing):
     object_to_change = Listing.objects.get(name=listing)
