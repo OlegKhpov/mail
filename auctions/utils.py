@@ -17,4 +17,5 @@ def check_bid(bid, listing):
     return True
 
 def save_bid(listing, user, new_bid):
-    pass
+    new = listing.auction_set.create(current_bid=new_bid, user=user)
+    new.save()

@@ -115,6 +115,7 @@ def place_bid(request, listing):
     bid = request.POST.get('bid')
     listing = Listing.objects.get(name=listing)
     if check_bid(bid, listing):
+        save_bid(listing, current_user, bid)
         listing.price = int(bid)
         listing.save()
         context = {
@@ -126,7 +127,7 @@ def place_bid(request, listing):
         if listing in get_watchlist(request.user):
             context['in_watchlist'] = True
         return render(request, "auctions/listing.html", context)
-        
+
     context = {
             "listing": listing,
             "watchlist_len": len(get_watchlist(request.user)),
@@ -141,5 +142,8 @@ def place_bid(request, listing):
 def close_bids(request, listing):
     object_to_change = Listing.objects.get(name=listing)
     object_to_change.status = False
+    winner = object_to_change.auction_set.all().last()
+    winner.winner = True
+    winner.save()
     object_to_change.save()
     return HttpResponseRedirect(reverse("index"))

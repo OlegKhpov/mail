@@ -28,8 +28,12 @@
     {% endif %}
     
     <h4>Bids</h4>
-    <div>
+    <div>        
+    {% if listing.status %}
         <b>Current price - {{ listing.price }}$</b>
+        {% if listing.owner == request.user %}
+            Last bid made by: {{ listing.auction_set.all.last.user }}
+        {% endif %}
     </div>
     <form action="{% url 'place_bid' listing %}" method="POST">
         {% csrf_token %}
@@ -47,6 +51,11 @@
             
           </div>
     </form>
+    {% elif listing.auction_set.all.last.user == request.user%}
+        <b>Congratulations! You are the winner of this Auction. Please contact adminitrator!</b>
+    {% else %}
+        <b>Bids are closed</b>
+    {% endif %}
     <h4>Comment_field</h4>
 
     {% if in_watchlist %}

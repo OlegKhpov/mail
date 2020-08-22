@@ -31,7 +31,6 @@ class Listing(models.Model):
 
 class Auction(models.Model):
     listing = models.ForeignKey(Listing, on_delete=models.CASCADE)
-    number_bids = models.IntegerField(default=0)
     current_bid = models.IntegerField(null=True, blank=True)
     date_placed = models.DateTimeField(default=timezone.now, blank=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
@@ -48,6 +47,7 @@ class Comment(models.Model):
     comment = models.TextField(max_length=640)
     date = models.DateTimeField(default=timezone.now, blank=True)
     author = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
+    winner = models.BooleanField(default=False)
 
     def __str__(self):
         return self.listing
