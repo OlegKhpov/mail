@@ -57,7 +57,8 @@
         <b>Bids are closed</b>
     {% endif %}
     <h4>Comment_field</h4>
-
+        {% for comment in comments %}
+            Comment: {{ comment.comment }}
     {% if in_watchlist %}
         <div>
             <a href="" class="btn btn-primary">Remove from Watchlist</a>

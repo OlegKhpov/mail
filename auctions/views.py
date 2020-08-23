@@ -6,7 +6,7 @@ from django.urls import reverse
 from django import forms
 
 from .utils import *
-from .models import User, Listing, Auction, Watchlist
+from .models import User, Listing, Auction, Watchlist, Comment
 
 def index(request):
     return render(request, "auctions/index.html",{
@@ -70,10 +70,22 @@ def listing(request, listing):
         "listing": Listing.objects.get(name=listing),
         "watchlist_len": len(get_watchlist(request.user)),
         "in_watchlist": False,
+        "comments": Listing.objects.get(name=listing).comment_set.all(),
     }
     if Listing.objects.get(name=listing) in get_watchlist(request.user):
         context['in_watchlist'] = True
     return render(request, "auctions/listing.html", context)
+
+def categories(request):
+    return render(request, "auctions/categories.html", {
+        "CATEGORY": Listing.CATEGORIES,
+    })
+
+def category(request, category):
+    cat = Listing.objects.filter(category=category)
+    return render(request, "auctions/category.html", {
+        'category': cat
+    })
 
 def my_watchlist(request):
     watchlist = get_watchlist(request.user)
