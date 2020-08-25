@@ -34,7 +34,7 @@ class Auction(models.Model):
     current_bid = models.IntegerField(null=True, blank=True)
     date_placed = models.DateTimeField(default=timezone.now, blank=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
-    winner = models.BooleanField(default=False)
+    winner = models.BooleanField(default=False, null=True)
 
 class Watchlist(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -50,4 +50,4 @@ class Comment(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
 
     def __str__(self):
-        return self.listing
+        return self.listing.name

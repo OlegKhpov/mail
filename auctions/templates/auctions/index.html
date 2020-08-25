@@ -9,9 +9,9 @@
                         <b>{{ item.name }}</b>
                     </div>
                     {% if item.image %}
-                        <img src="{ IMAGE_URL }:{{ item.image.url }}">
+                        <img src="{{ item.image.url }}" style="width:100px;height:100px;">
                     {% else %}
-                        <img src="images/no_image.png">
+                        <img src="images/no_image.png" alt="no_image" style="width:100px;height:100px;">
                     {% endif %}
                     <ul class="list-group list-group-flush">
                         <li class="list-group-item">{{ item.name }} - Current price {{ item.price }}$</li>

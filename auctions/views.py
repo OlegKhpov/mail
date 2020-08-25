@@ -79,12 +79,14 @@ def listing(request, listing):
 def categories(request):
     return render(request, "auctions/categories.html", {
         "CATEGORY": Listing.CATEGORIES,
+        "watchlist_len": len(get_watchlist(request.user)),
     })
 
 def category(request, category):
     cat = Listing.objects.filter(category=category)
     return render(request, "auctions/category.html", {
-        'category': cat
+        'category': cat,
+        "watchlist_len": len(get_watchlist(request.user)),
     })
 
 def my_watchlist(request):
@@ -100,7 +102,12 @@ def add_to_wl(request, listing):
     if not listing in get_watchlist(user):
         wl = Watchlist(user=user, item=listing)   
         wl.save()
-    return HttpResponseRedirect(reverse("index"))   
+    return HttpResponseRedirect(reverse("index")) 
+
+def remove_from_wl(request, listing):
+    listing = Listing.objects.get(name=listing)
+    watchlist = listing.watchlist_set.get(user=request.user).delete()
+    return HttpResponseRedirect(reverse("index")) 
 
         
 def create(request):
@@ -119,8 +126,21 @@ def create_new(request):
         new_listing.save()
         return HttpResponseRedirect(reverse("index"))
 
-def comment(request, listing):
-    pass
+def new_comment(request, listing):
+    if request.method == "POST":
+        comment = request.POST.get("comment_textarea")
+        listing_of_comment = Listing.objects.get(name=listing)
+        comment_data = listing_of_comment.comment_set.create(comment=comment, author=request.user)
+        comment_data.save()
+    context = {
+        "listing": Listing.objects.get(name=listing),
+        "watchlist_len": len(get_watchlist(request.user)),
+        "in_watchlist": False,
+        "comments": Listing.objects.get(name=listing).comment_set.all(),
+    }
+    if Listing.objects.get(name=listing) in get_watchlist(request.user):
+        context['in_watchlist'] = True
+    return render(request, "auctions/listing.html", context)
 
 def place_bid(request, listing):
     current_user = request.user

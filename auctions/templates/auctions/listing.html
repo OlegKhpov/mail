@@ -13,7 +13,7 @@
         </div>
         <div>
             {% if listing.image %}
-                <img src="{ IMAGE_URL }:{{ listing.image.url }}">
+                <img src="{{ listing.image.url }}" style="width:600px;height:600px;">
             {% else %}
                 <img src="images/no_image.png">
             {% endif %}
@@ -56,9 +56,31 @@
     {% else %}
         <b>Bids are closed</b>
     {% endif %}
-    <h4>Comment_field</h4>
+    <h4>Comments</h4>
         {% for comment in comments %}
-            Comment: {{ comment.comment }}
+            <div class="card" style="width: 35rem;">
+                <div class="card-body">
+                    <h6 class="card-subtitle mb-2 text-muted">{{ comment.author }} commented at {{ comment.date }}:</h6>
+                    <p class="card-text">{{ comment.comment }}</p>
+                </div>
+            </div>
+        {% endfor %}
+        {% if user.is_authenticated %}
+            <div class="card"></div>
+                <div class="card-header">
+                    Comment listing:
+                </div>
+                <div class="card-body">
+                    <form action="{% url 'new_comment' listing.name %}" method="POST">
+                        {% csrf_token %}
+                        <textarea placeholder="Type your comment..." class="form-control" style="height: 200px;" name="comment_textarea"></textarea>
+                        <input type="submit" class="btn btn-success" value="Leave comment">
+                    </form>
+                </div>
+            </div>
+        {% else %}
+        To leave comments you need to <a href="{% url 'login' %}">Log in</a>
+        {% endif %}
     {% if in_watchlist %}
         <div>
             <a href="" class="btn btn-primary">Remove from Watchlist</a>

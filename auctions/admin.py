@@ -15,10 +15,31 @@ class ListingAdmin(admin.ModelAdmin):
     )
     list_editable = list_display
     list_display_links = None
+
+class CommnetAdmin(admin.ModelAdmin):
+    list_display = (
+        "listing",
+        "comment",
+        "date",
+        "author",
+    )
+    list_editable = list_display
+    list_display_links = None
+
+class AuctionAdmin(admin.ModelAdmin):
+    list_display = (
+        "listing",
+        "current_bid",
+        "date_placed",
+        "user",
+        "winner",
+    )
+    list_editable = list_display
+    list_display_links = None
     
 admin.site.register(User)
 admin.site.register(Listing, ListingAdmin)
-admin.site.register(Auction)
+admin.site.register(Auction, AuctionAdmin)
 admin.site.register(Watchlist)
-admin.site.register(Comment)
+admin.site.register(Comment, CommnetAdmin)
 
