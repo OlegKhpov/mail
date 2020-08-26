@@ -122,7 +122,11 @@ def create_new(request):
         description = request.POST.get("desc")
         price = request.POST.get("stprice")
         category = request.POST.get("category_set")
-        new_listing = Listing(name=name, description=description, price=price, owner=current_user, category=category)
+        if request.FILES:
+            image = request.FILES['image'].read()
+            new_listing = Listing(name=name, description=description, price=price, owner=current_user, category=category, image=image)
+        else:
+            new_listing = Listing(name=name, description=description, price=price, owner=current_user, category=category)
         new_listing.save()
         return HttpResponseRedirect(reverse("index"))
 
@@ -175,7 +179,8 @@ def close_bids(request, listing):
     object_to_change = Listing.objects.get(name=listing)
     object_to_change.status = False
     winner = object_to_change.auction_set.all().last()
-    winner.winner = True
-    winner.save()
+    if winner != None:
+        winner.winner = True
+        winner.save()
     object_to_change.save()
     return HttpResponseRedirect(reverse("index"))

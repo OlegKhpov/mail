@@ -1,5 +1,6 @@
 {% extends "auctions/layout.html" %}
 
+{% load static %}
 {% block body %}
     <div>
         <h1>{{ listing.name }}</h1>
@@ -13,9 +14,9 @@
         </div>
         <div>
             {% if listing.image %}
-                <img src="{{ listing.image.url }}" style="width:600px;height:600px;">
+                <img src="{{ IMAGES_URL }}/{{ listing.image }}" style="width:600px;height:600px;">
             {% else %}
-                <img src="images/no_image.png">
+                <img src="{% static 'images/no_image.png' %}">
             {% endif %}
         </div>
         <div>{{ listing.description }}</div>
