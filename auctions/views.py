@@ -122,8 +122,8 @@ def create_new(request):
         description = request.POST.get("desc")
         price = request.POST.get("stprice")
         category = request.POST.get("category_set")
-        if request.FILES:
-            image = request.FILES['image'].read()
+        if request.POST.get('image') != None:
+            image = request.POST.get('image')
             new_listing = Listing(name=name, description=description, price=price, owner=current_user, category=category, image=image)
         else:
             new_listing = Listing(name=name, description=description, price=price, owner=current_user, category=category)

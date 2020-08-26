@@ -17,7 +17,7 @@ class Listing(models.Model):
     owner = models.ForeignKey(User, on_delete=models.CASCADE, default='')
     name = models.CharField(max_length=64)
     price = models.IntegerField()
-    image = models.ImageField(upload_to="static/images", null=True, blank=True)
+    image = models.ImageField(upload_to="auctions/static/images", null=True, blank=True)
     created = models.DateTimeField(default=timezone.now, blank=True)
     description = models.TextField(max_length=640)
     status = models.BooleanField(default=True)
