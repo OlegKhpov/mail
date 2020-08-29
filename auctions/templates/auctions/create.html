@@ -2,7 +2,7 @@
 
 {% block body %}
     <h1>Create new listing</h1>
-    <form method="POST" action="{% url 'create_new'%}">
+    <form method="POST" action="{% url 'create_new'%}" enctype="multipart/form-data">
         {% csrf_token %}
         <div>
             <label for="formControlRange">Listing name: </label>

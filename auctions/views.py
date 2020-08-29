@@ -5,6 +5,7 @@ from django.shortcuts import render
 from django.urls import reverse
 from django import forms
 from django.core.files.storage import FileSystemStorage
+from django.conf import settings
 
 from .utils import *
 from .models import User, Listing, Auction, Watchlist, Comment
@@ -125,7 +126,7 @@ def create_new(request):
         category = request.POST.get("category_set")
         if request.FILES['image']:
             image = request.FILES['image']
-            fs = FileSystemStorage()
+            fs = FileSystemStorage(location=settings.IMAGES_ROOT)
             filename = fs.save(image.name, image)
             new_listing = Listing(name=name, description=description, price=price, owner=current_user, category=category, image=image)
         else:

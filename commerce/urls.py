@@ -27,7 +27,7 @@ urlpatterns = [
 
 if settings.DEBUG:
     urlpatterns += [
-        url(r'^images/(?P<path>.*)$', serve, {
-            "document_root": settings.IMAGES_DIR,
+        url(r'^/auctions/static/images/(?P<path>.*)$', serve, {
+            "document_root": settings.IMAGES_ROOT,
         }),
     ]
