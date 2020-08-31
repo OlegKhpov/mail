@@ -126,7 +126,7 @@ def create_new(request):
         category = request.POST.get("category_set")
         if request.FILES['image']:
             image = request.FILES['image']
-            fs = FileSystemStorage(location=settings.IMAGES_ROOT)
+            fs = FileSystemStorage(location=settings.IMAGES_DIR)
             filename = fs.save(image.name, image)
             new_listing = Listing(name=name, description=description, price=price, owner=current_user, category=category, image=image)
         else:

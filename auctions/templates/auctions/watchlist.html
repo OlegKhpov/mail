@@ -1,5 +1,6 @@
 {% extends "auctions/layout.html" %}
 
+{% load static %}
 {% block body %}
     <h2>My Watchlist</h2>
     {% for item in watchlist %}
@@ -8,7 +9,7 @@
                 <b>{{ item.name }}</b>
             </div>
             {% if item.image %}
-                <img src="{ IMAGE_URL }:{{ item.image.url }}">
+                <img src="{{ IMAGES_URL }}/{{ item.image.url }}" style="width:100px; height:100px;">
             {% else %}
                 <img src="images/no_image.png">
             {% endif %}

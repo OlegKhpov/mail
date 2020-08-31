@@ -10,7 +10,7 @@
                         <b>{{ item.name }}</b>
                     </div>
                     {% if item.image %}
-                        <img src="{{ IMAGES_URL }}/{{ item.image }}" style="width:100px; height:100px;">
+                        <img src="{{ IMAGES_URL }}/{{ item.image.url }}" style="width:100px; height:100px;">
                     {% else %}
                         <img src="images/no_image.png" alt="no_image" style="width:100px;height:100px;">
                     {% endif %}
