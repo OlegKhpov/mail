@@ -88,7 +88,7 @@
         </div>
     {% else %}
         <div>
-            <a href="{% url 'add_to_wl' listing.name %}" class="btn btn-primary">Add to Watchlist</a>
+            <a href="{% url 'add_to_wl' item.name %}" class="btn btn-primary">Add to Watchlist</a>
         </div>
     {% endif %}
 {% endblock %}
