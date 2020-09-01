@@ -84,7 +84,7 @@
         {% endif %}
     {% if in_watchlist %}
         <div>
-            <a href="" class="btn btn-primary">Remove from Watchlist</a>
+            <a href="{% url 'remove_from_wl' item.name %}" class="btn btn-primary">Remove from Watchlist</a>
         </div>
     {% else %}
         <div>
